@@ -1,0 +1,82 @@
+Processing 'classes.dex'...
+Opened 'classes.dex', DEX version '035'
+Class #0            -
+  Class descriptor  : 'LLoop;'
+  Access flags      : 0x0001 (PUBLIC)
+  Superclass        : 'Ljava/lang/Object;'
+  Interfaces        -
+  Static fields     -
+  Instance fields   -
+  Direct methods    -
+    #0              : (in LLoop;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      code          -
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+000174:                                        |[000174] Loop.<init>:()V
+000184: 7010 0400 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@0004
+00018a: 0e00                                   |0003: return-void
+      catches       : (none)
+      positions     : 
+        0x0000 line=1
+      locals        : 
+        0x0000 - 0x0004 reg=0 this LLoop; 
+
+    #1              : (in LLoop;)
+      name          : 'main'
+      type          : '([Ljava/lang/String;)V'
+      access        : 0x0009 (PUBLIC STATIC)
+      code          -
+      registers     : 2
+      ins           : 1
+      outs          : 2
+      insns size    : 12 16-bit code units
+00018c:                                        |[00018c] Loop.main:([Ljava/lang/String;)V
+00019c: 6201 0000                              |0000: sget-object v1, Ljava/lang/System;.out:Ljava/io/PrintStream; // field@0000
+0001a0: 1300 6400                              |0002: const/16 v0, #int 100 // #64
+0001a4: 7110 0200 0000                         |0004: invoke-static {v0}, LLoop;.myMethod:(I)I // method@0002
+0001aa: 0a00                                   |0007: move-result v0
+0001ac: 6e20 0300 0100                         |0008: invoke-virtual {v1, v0}, Ljava/io/PrintStream;.println:(I)V // method@0003
+0001b2: 0e00                                   |000b: return-void
+      catches       : (none)
+      positions     : 
+        0x0000 line=13
+        0x000b line=14
+      locals        : 
+        0x0000 - 0x000c reg=1 (null) [Ljava/lang/String; 
+
+    #2              : (in LLoop;)
+      name          : 'myMethod'
+      type          : '(I)I'
+      access        : 0x0008 (STATIC)
+      code          -
+      registers     : 3
+      ins           : 1
+      outs          : 0
+      insns size    : 10 16-bit code units
+000150:                                        |[000150] Loop.myMethod:(I)I
+000160: 0000                                   |0000: nop // spacer
+000162: 1200                                   |0001: const/4 v0, #int 0 // #0
+000164: 1201                                   |0002: const/4 v1, #int 0 // #0
+000166: 3520 0600                              |0003: if-ge v0, v2, 0009 // +0006
+00016a: b001                                   |0005: add-int/2addr v1, v0
+00016c: d800 0001                              |0006: add-int/lit8 v0, v0, #int 1 // #01
+000170: 28fb                                   |0008: goto 0003 // -0005
+000172: 0f01                                   |0009: return v1
+      catches       : (none)
+      positions     : 
+        0x0000 line=3
+        0x0001 line=4
+        0x0005 line=6
+        0x0006 line=4
+        0x0009 line=8
+      locals        : 
+        0x0000 - 0x000a reg=2 (null) I 
+
+  Virtual methods   -
+  source_file_idx   : 7 (Loop.java)
+
