@@ -8,12 +8,20 @@
 
 #include "instruction_block.h"
 
+enum DFSColor
+{
+    white,
+    grey,
+    black
+};
+
 class BasicBlock
 {
 public:
     BasicBlock(int id)
     {
         id_ = id;
+        color = DFSColor::white;
     }
 
     void AddInstruction(InstructionBlock instr)
@@ -56,10 +64,13 @@ public:
     }
 
 private:
+    DFSColor color;
     std::list<InstructionBlock> ilist;
     std::vector<int> preds;
     std::vector<int> succs;
     int id_;
+
+    friend class DomTree;
 };
 
 #endif // BASIC_BLOCK_H

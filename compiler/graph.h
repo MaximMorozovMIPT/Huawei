@@ -41,7 +41,12 @@ public:
         }
     }
 
-    const std::shared_ptr<BasicBlock> &GetBB(int i)
+    std::shared_ptr<BasicBlock> &GetBB(int i)
+    {
+        return BB_vec[i];
+    }
+    
+    const std::shared_ptr<BasicBlock> &GetBB(int i) const
     {
         return BB_vec[i];
     }
@@ -52,7 +57,7 @@ public:
         BB_vec[w]->AddPred(v);
     }
 
-    const std::vector<std::shared_ptr<BasicBlock>> &GetBBVector()
+    const std::vector<std::shared_ptr<BasicBlock>> &GetBBVector() const
     {
         return BB_vec;
     }
@@ -81,7 +86,7 @@ public:
         }
     }
 
-    const std::vector<std::shared_ptr<InstructionBlock>> &GetIBVector()
+    const std::vector<std::shared_ptr<InstructionBlock>> &GetIBVector() const
     {
         return IB_vec;
     }
@@ -168,6 +173,8 @@ private:
 
     int bb_counter;
     int inst_counter;
+
+    friend class DomTree;
 };
 
 #endif // GRAPH_H

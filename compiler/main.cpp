@@ -36,7 +36,7 @@ done:
 */
 
 void TestControlFlow(const std::vector<std::shared_ptr<BasicBlock>> &bbvec);
-void TestGraph1(Graph test_graph);
+void TestGraph1(const Graph &test_graph);
 
 int main()
 {
@@ -78,7 +78,7 @@ int main()
     return 0;
 }
 
-void TestGraph1(Graph test_graph)
+void TestGraph1(const Graph &test_graph)
 {
     auto bb_vec = test_graph.GetBBVector();
     auto ib_vec = test_graph.GetIBVector();

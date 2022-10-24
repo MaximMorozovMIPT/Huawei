@@ -30,7 +30,7 @@ struct PhiInput
 class InstructionBlock
 {
 public:
-    InstructionBlock(Instrs instr, std::shared_ptr<BasicBlock> bb1, std::shared_ptr<BasicBlock> bb2 = nullptr)
+    InstructionBlock(Instrs instr, const std::shared_ptr<BasicBlock> &bb1, const std::shared_ptr<BasicBlock> &bb2 = nullptr)
     {
         instr_ = instr;
         bb1_ = bb1;
