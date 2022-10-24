@@ -4,8 +4,10 @@
 #include <vector>
 #include <cstdint>
 #include <list>
+#include <memory>
 
 class BasicBlock;
+class InstructionBlock;
 
 class VM
 {
@@ -20,9 +22,9 @@ public:
     }
 
     std::vector<uint64_t> regs;
+    std::shared_ptr<BasicBlock>currbb;
+    std::list<std::shared_ptr<BasicBlock>> logBB;
     int cmp_res;
-    BasicBlock *currbb;
-    std::list<BasicBlock *> logBB;
 
 private:
     static VM *p_instance;

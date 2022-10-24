@@ -3,25 +3,42 @@
 
 #include <list>
 #include <set>
+#include <cassert>
+#include <memory>
+
 #include "instruction_block.h"
-// #include "vm.h"
 
 class BasicBlock
 {
 public:
+    BasicBlock(int id)
+    {
+        id_ = id;
+    }
+
     void AddInstruction(InstructionBlock instr)
     {
         ilist.emplace_back(instr);
     }
 
-    void AddPred(BasicBlock *bb)
+    void AddPred(int bb)
     {
-        preds.insert(bb);
+        preds.push_back(bb);
     }
 
-    void AddSuccs(BasicBlock *bb)
+    const std::vector<int> &GetPreds()
     {
-        succs.insert(bb);
+        return preds;
+    }
+
+    void AddSuccs(int bb)
+    {
+        succs.push_back(bb);
+    }
+
+    const std::vector<int> &GetSuccs()
+    {
+        return succs;
     }
 
     void Execute()
@@ -33,10 +50,16 @@ public:
         }
     }
 
+    int GetId()
+    {
+        return id_;
+    }
+
 private:
     std::list<InstructionBlock> ilist;
-    std::set<BasicBlock *> preds;
-    std::set<BasicBlock *> succs;
+    std::vector<int> preds;
+    std::vector<int> succs;
+    int id_;
 };
 
 #endif // BASIC_BLOCK_H
