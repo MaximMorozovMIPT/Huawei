@@ -49,6 +49,26 @@ public:
         return succs;
     }
 
+    void AddDominatesOver(std::vector<int> dom_succs)
+    {
+        dominates_over = dom_succs;
+    }
+
+    const std::vector<int> &GetDominatesOver()
+    {
+        return dominates_over;
+    }
+
+    void AddDominator(int bb_id)
+    {
+        dominators_vec.push_back(bb_id);
+    }
+
+    const std::vector<int> &GetDominators()
+    {
+        return dominators_vec;
+    }
+
     void Execute()
     {
         VM::getVM()->logBB.emplace_back(this);
@@ -63,11 +83,14 @@ public:
         return id_;
     }
 
+
 private:
     DFSColor color;
     std::list<InstructionBlock> ilist;
     std::vector<int> preds;
     std::vector<int> succs;
+    std::vector<int> dominates_over;
+    std::vector<int> dominators_vec;
     int id_;
 
     friend class DomTree;

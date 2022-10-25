@@ -1,7 +1,16 @@
+#include <cassert>
+
 #include "graph.h"
 #include "dom_tree.h"
 
+void TestGraph1();
+
 int main()
+{
+    TestGraph1();
+}
+
+void TestGraph1()
 {
     Graph graph1;
     graph1.AddBBs(7);
@@ -30,5 +39,23 @@ int main()
     graph1.AddEdge(6, 3);
 
     DomTree dt1(&graph1);
-    dt1.ExecDFS(0);
+    dt1.BuildDomTree();
+
+    // Test dominates over
+    assert(graph1.GetBBVector()[0]->GetDominatesOver().size() == 6);
+    assert(graph1.GetBBVector()[1]->GetDominatesOver().size() == 5);
+    assert(graph1.GetBBVector()[2]->GetDominatesOver().size() == 0);
+    assert(graph1.GetBBVector()[3]->GetDominatesOver().size() == 0);
+    assert(graph1.GetBBVector()[4]->GetDominatesOver().size() == 0);
+    assert(graph1.GetBBVector()[5]->GetDominatesOver().size() == 2);
+    assert(graph1.GetBBVector()[6]->GetDominatesOver().size() == 0);
+
+    // Test dominators
+    assert(graph1.GetBBVector()[0]->GetDominators().size() == 0);
+    assert(graph1.GetBBVector()[1]->GetDominators().size() == 1);
+    assert(graph1.GetBBVector()[2]->GetDominators().size() == 2);
+    assert(graph1.GetBBVector()[3]->GetDominators().size() == 2);
+    assert(graph1.GetBBVector()[4]->GetDominators().size() == 3);
+    assert(graph1.GetBBVector()[5]->GetDominators().size() == 2);
+    assert(graph1.GetBBVector()[6]->GetDominators().size() == 3);
 }

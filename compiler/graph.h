@@ -62,6 +62,15 @@ public:
         return BB_vec;
     }
 
+    void ResolveDomination(int bb_id, const std::vector<int>& dominates_over)
+    {
+        BB_vec[bb_id]->AddDominatesOver(dominates_over);
+        for (const auto &bb_succs_id: dominates_over)
+        {
+            BB_vec[bb_succs_id]->AddDominator(bb_id);
+        }
+    }
+
     // ---------------------------
     // Instruction block functions
     // ---------------------------
