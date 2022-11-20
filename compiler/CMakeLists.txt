@@ -9,3 +9,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(Compiler main.cpp)
 add_executable(DomTree dom_tree_test.cpp)
+add_executable(LoopAnalize loop_analizer_test.cpp)

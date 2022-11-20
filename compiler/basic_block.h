@@ -5,6 +5,7 @@
 #include <set>
 #include <cassert>
 #include <memory>
+#include <utility>
 
 #include "instruction_block.h"
 
@@ -69,6 +70,26 @@ public:
         return dominators_vec;
     }
 
+    void AddBackedgeTo(int bb_id, bool is_irreducible)
+    {
+        backedge_to.push_back({bb_id, is_irreducible});
+    }
+
+    const std::vector<std::pair<int, bool>> &GetBackedgesTo()
+    {
+        return backedge_to;
+    }
+
+    void AddBackedgeFrom(int bb_id, bool is_irreducible)
+    {
+        backedge_from.push_back({bb_id, is_irreducible});
+    }
+
+    const std::vector<std::pair<int, bool>> &GetBackedgesFrom()
+    {
+        return backedge_from;
+    }
+
     void Execute()
     {
         VM::getVM()->logBB.emplace_back(this);
@@ -91,9 +112,12 @@ private:
     std::vector<int> succs;
     std::vector<int> dominates_over;
     std::vector<int> dominators_vec;
+    std::vector<std::pair<int, bool>> backedge_to;
+    std::vector<std::pair<int, bool>> backedge_from;
     int id_;
 
     friend class DomTree;
+    friend class LoopAnalizer;
 };
 
 #endif // BASIC_BLOCK_H

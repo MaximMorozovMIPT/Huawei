@@ -71,6 +71,12 @@ public:
         }
     }
 
+    void AddBackEdge(int from, int to, bool is_irreducible)
+    {
+        BB_vec[from]->AddBackedgeTo(to, is_irreducible);
+        BB_vec[to]->AddBackedgeFrom(from, is_irreducible);
+    }
+
     // ---------------------------
     // Instruction block functions
     // ---------------------------
