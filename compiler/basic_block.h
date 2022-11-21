@@ -9,11 +9,19 @@
 
 #include "instruction_block.h"
 
+class Loop;
+
 enum DFSColor
 {
     white,
     grey,
     black
+};
+
+enum LSColor
+{
+    empty,
+    green
 };
 
 class BasicBlock
@@ -23,6 +31,7 @@ public:
     {
         id_ = id;
         color = DFSColor::white;
+        lscolor = LSColor::empty;
     }
 
     void AddInstruction(InstructionBlock instr)
@@ -70,26 +79,6 @@ public:
         return dominators_vec;
     }
 
-    void AddBackedgeTo(int bb_id, bool is_irreducible)
-    {
-        backedge_to.push_back({bb_id, is_irreducible});
-    }
-
-    const std::vector<std::pair<int, bool>> &GetBackedgesTo()
-    {
-        return backedge_to;
-    }
-
-    void AddBackedgeFrom(int bb_id, bool is_irreducible)
-    {
-        backedge_from.push_back({bb_id, is_irreducible});
-    }
-
-    const std::vector<std::pair<int, bool>> &GetBackedgesFrom()
-    {
-        return backedge_from;
-    }
-
     void Execute()
     {
         VM::getVM()->logBB.emplace_back(this);
@@ -97,6 +86,16 @@ public:
         {
             IB.CallInstr();
         }
+    }
+
+    void SetLoop(Loop *new_loop)
+    {
+        loop = new_loop;
+    }
+
+    Loop *GetLoop()
+    {
+        return loop;
     }
 
     int GetId()
@@ -107,14 +106,14 @@ public:
 
 private:
     DFSColor color;
+    LSColor lscolor;
     std::list<InstructionBlock> ilist;
     std::vector<int> preds;
     std::vector<int> succs;
     std::vector<int> dominates_over;
     std::vector<int> dominators_vec;
-    std::vector<std::pair<int, bool>> backedge_to;
-    std::vector<std::pair<int, bool>> backedge_from;
     int id_;
+    Loop *loop = nullptr;
 
     friend class DomTree;
     friend class LoopAnalizer;

@@ -37,6 +37,8 @@ void TestGraph1()
 
     LoopAnalizer la1(&graph1);
     la1.BuildLoopTree();
+
+    assert(la1.GetLoopVector().size() == 1);
 }
 
 
@@ -73,6 +75,21 @@ void TestGraph2()
 
     LoopAnalizer la2(&graph2);
     la2.BuildLoopTree();
+    assert(la2.GetLoopVector().size() == 4);
+
+    assert(graph2.GetBB(0)->GetLoop() == la2.GetLoopVector()[0]);
+    assert(graph2.GetBB(10)->GetLoop() == la2.GetLoopVector()[0]);
+
+    assert(graph2.GetBB(2)->GetLoop() == la2.GetLoopVector()[1]);
+    assert(graph2.GetBB(3)->GetLoop() == la2.GetLoopVector()[1]);
+
+    assert(graph2.GetBB(4)->GetLoop() == la2.GetLoopVector()[2]);
+    assert(graph2.GetBB(5)->GetLoop() == la2.GetLoopVector()[2]);
+
+    assert(graph2.GetBB(1)->GetLoop() == la2.GetLoopVector()[3]);
+    assert(graph2.GetBB(6)->GetLoop() == la2.GetLoopVector()[3]);
+    assert(graph2.GetBB(7)->GetLoop() == la2.GetLoopVector()[3]);
+    assert(graph2.GetBB(9)->GetLoop() == la2.GetLoopVector()[3]);
 }
 
 void TestGraph3()
@@ -103,7 +120,23 @@ void TestGraph3()
     graph3.AddEdge(7, 6);
     graph3.AddEdge(7, 8);
 
-
     LoopAnalizer la3(&graph3);
     la3.BuildLoopTree();
+    assert(la3.GetLoopVector().size() == 3);
+
+
+    assert(graph3.GetBB(0)->GetLoop() == la3.GetLoopVector()[0]);
+    assert(graph3.GetBB(3)->GetLoop() == la3.GetLoopVector()[0]);
+    assert(graph3.GetBB(7)->GetLoop() == la3.GetLoopVector()[0]);
+    assert(graph3.GetBB(8)->GetLoop() == la3.GetLoopVector()[0]);
+
+    // Irreducible loop so only 2 BBs inside
+    assert(graph3.GetBB(2)->GetLoop() == la3.GetLoopVector()[1]);
+    assert(graph3.GetBB(6)->GetLoop() == la3.GetLoopVector()[1]);
+
+    assert(graph3.GetBB(1)->GetLoop() == la3.GetLoopVector()[2]);
+    assert(graph3.GetBB(4)->GetLoop() == la3.GetLoopVector()[2]);
+    assert(graph3.GetBB(5)->GetLoop() == la3.GetLoopVector()[2]);
+
+
 }
